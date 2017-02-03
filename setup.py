@@ -37,7 +37,7 @@ setup(
     """,
     install_requires=[
         'zerotk.zops',
-        'virtualenvwrapper',
+        'virtualenv-api',
     ],
     setup_requires=['setuptools_scm'],
     tests_require=[],
