@@ -37,10 +37,12 @@ setup(
     """,
     install_requires=[
         'zerotk.zops',
-        'virtualenv-api',
+        'zerotk.virtualenv-api',
     ],
     setup_requires=['setuptools_scm'],
-    tests_require=[],
+    tests_require=[
+        'pytest-click',
+    ],
 
     license="MIT license",
 )
