@@ -28,7 +28,7 @@ def create(name, python, requirements, editables, packages):
 
     for i_requirement in requirements:
         Console.item('REQUIREMENT: {}'.format(i_requirement))
-        Console.output(venv.requirement(bytes(i_requirement), force=True, upgrade=True))
+        Console.output(venv.requirement(i_requirement, force=True, upgrade=True))
 
     for i_editable in editables:
         Console.item('EDITABLE: {}'.format(i_editable))
