@@ -28,11 +28,11 @@ def create(name, python, requirements, editables, packages):
 
     for i_requirement in requirements:
         Console.item('REQUIREMENT: {}'.format(i_requirement))
-        Console.output(venv.install('-r {}'.format(i_requirement), force=True, upgrade=True))
+        Console.output(venv.requirement(bytes(i_requirement), force=True, upgrade=True))
 
     for i_editable in editables:
         Console.item('EDITABLE: {}'.format(i_editable))
-        Console.output(venv.install('-e {}'.format(i_editable), force=True, upgrade=True))
+        Console.output(venv.editable(i_editable, force=True, upgrade=True))
 
     for i_package in packages:
         Console.item('PACKAGE: {}'.format(i_package))
@@ -43,16 +43,6 @@ def _create_venv(name, python):
     from virtualenvapi.manage import VirtualEnvironment
     import os
 
-    class MyVirtualEnvironment(VirtualEnvironment):
-
-        def force_create(self):
-            import shutil
-            shutil.rmtree(self.name, ignore_errors=True)
-            self._create()
-
-        def requirement(self, requirement):
-            return self._execute_pip(['install', '-U', '-r', requirement])
-
     venv_path = os.path.expandvars('${WORKON_HOME}/' + name)
-    result = MyVirtualEnvironment(venv_path, python=python)
+    result = VirtualEnvironment(venv_path, python=python)
     return result
