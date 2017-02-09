@@ -12,18 +12,22 @@ def main():
 
 @main.command()
 @click.argument('name')
-@click.option('--python', default='python2')  # , options=('python2', 'python3'))
 @click.option('requirements', '-r', multiple=True)
 @click.option('editables', '-e', multiple=True)
 @click.option('packages', '-i', multiple=True)
-def create(name, python, requirements, editables, packages):
+@click.option('--python', default='python2')
+@click.option('--force', is_flag=True)
+def create(name, requirements, editables, packages, python, force):
     """
     Create a virtualenv, caching when possible.
     """
     from zerotk.zops import Console
 
     venv = _create_venv(name, python)
-    venv.force_create()
+    if force:
+        venv.force_create()
+    else:
+        venv.open_or_create()
     venv.install('virtualenvwrapper')
 
     for i_requirement in requirements:
