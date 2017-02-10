@@ -47,6 +47,15 @@ def _create_venv(name, python):
     from virtualenvapi.manage import VirtualEnvironment
     import os
 
-    venv_path = os.path.expandvars('${WORKON_HOME}/' + name)
+    def workon_home(*args):
+        try:
+            result = os.environ['WORKON_HOME']
+        except KeyError:
+            raise RuntimeError('Environment variables WORKON_HOME not found.')
+        else:
+            os.makedirs(result, exist_ok=True)
+            return os.path.join(result, *args)
+
+    venv_path = workon_home(name)
     result = VirtualEnvironment(venv_path, python=python)
     return result
